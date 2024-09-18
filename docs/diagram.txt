@@ -1,0 +1,57 @@
+Table Users {
+  id integer PK
+  username varchar
+  email varchar
+  password varchar
+  created_at date
+  updated_at date
+}
+
+Table Images{
+  id integer PK
+  description varchar
+  image_url varchar
+  user_id integer
+  created_at date
+  updated_at date
+}
+
+Table Comments {
+  id integer PK
+  comment_text text
+  user_id integer
+  image_id integer
+  created_at date
+}
+
+Table Likes {
+  id integer PK
+  user_id integer
+  image_id integer
+  created_at date
+}
+
+Table Tags {
+  id integer PK
+  name varchar [unique]
+}
+
+Table ImageTags {
+  id integer PK
+  image_id integer
+  tag_id integer
+}
+
+Ref: "Images"."user_id" < "Users"."id"
+
+Ref: "Comments"."user_id" < "Users"."id"
+
+Ref: "Comments"."image_id" < "Images"."id"
+
+Ref: "Likes"."user_id" < "Users"."id"
+
+Ref: "Likes"."image_id" < "Images"."id"
+
+Ref: "ImageTags"."image_id" < "Images"."id"
+
+Ref: "ImageTags"."tag_id" < "Tags"."id"
