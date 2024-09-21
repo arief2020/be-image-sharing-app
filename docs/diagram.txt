@@ -3,12 +3,14 @@ Table Users {
   username varchar
   email varchar
   password varchar
+  photo varchar
   created_at date
   updated_at date
 }
-
+DbSharingImage
 Table Images{
   id integer PK
+  title varchar
   description varchar
   image_url varchar
   user_id integer

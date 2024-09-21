@@ -1,21 +1,21 @@
 const jwt = require("jsonwebtoken");
-const UserRepository = require("../repositories/UserRepository");
+const UserRepository = require("../repositories/user.repository");
 
 const authentication = async (req, res, next) => {
   try {
-    const authHeader = req.headers["authorization"];
-    const token = authHeader?.split(" ")[1];
+    const authHeader = req.headers["authorization"]
+    console.log(req.cookies, "ini cookies");
+    const token = req.cookies.accessToken || authHeader?.split(" ")[1];
     if (token == null) throw {name : "Unauthenticated"};
     const { id } = jwt.verify(token, process.env.ACCESS_TOKEN_SECREt);
 
-    const user = await UserRepository.getUserById(id)
+    const user = await UserRepository.findById(id);
     if (user === null) {
         throw {name: "Unauthenticated"}
       };
-      req.loggedUser = {
+      req.user = {
         id: user.id,
         email: user.email,
-        role: user.role,
     }
     next();
   } catch (error) {

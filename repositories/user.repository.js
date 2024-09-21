@@ -1,62 +1,49 @@
-const { User, Profile } = require("../models");
-
+const { User } = require("../models");
 class UserRepository {
-  static async getAllAndCount(limit, offset) {
+  static async create(data) {
     try {
-      const { rows, count } = await User.findAndCountAll({
-        offset,
-        limit,
-        include: Profile
-      });
-      return { rows, count };
+      const user = await User.create(data);
+      return user;
     } catch (error) {
       throw error;
     }
   }
-  static async getUserById(id) {
+
+  static async findByEmail(email) {
     try {
-      const movie = await User.findOne({where:{
-        id
-      }, include: Profile});
-      return movie;
+      const user = await User.findOne({ where: { email } });
+      return user;
     } catch (error) {
       throw error;
     }
   }
-  //   static async createMovies(data) {
-  //     try {
-  //         const movies = await Movies.create(data)
-  //         return movies
-  //     } catch (error) {
-  //         throw error
-  //     }
-  //   }
 
-    static async update(data, id){
-      try {
-        const user = await User.update(data,{
-          where:{
-            id
-          }
-        })
-        return user
+  static async findById(id) {
+    try {
+      const user = await User.findOne({ where: { id } });
+      return user;
+    } catch (error) {
+      throw error;
+    }
+  }
 
-      } catch (error) {
-        throw error
-      }
+  static async update(id, data) {
+    try {
+      const user = await User.update(data, { where: { id } });
+      return user;
+    } catch (error) {
+      throw error;
     }
-    static async destroy(id){
-      try {
-        const user = await User.destroy({
-          where:{
-            id
-          }
-        })
-        return user
-      } catch (error) {
-        throw error
-      }
+  }
+
+  static async delete(id) {
+    try {
+      const user = await User.destroy({ where: { id } });
+      return user;
+    } catch (error) {
+      throw error;
     }
+  }
 }
 
 module.exports = UserRepository;

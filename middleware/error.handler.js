@@ -11,13 +11,6 @@ const errorHandler = (err, req, res, next) => {
     return res.status(401).json({ message: "Unauthenticated" });
   } else if (err.name === "Unauthorized") {
     return res.status(401).json({ message: "Unauthorized" });
-  } else if (err.errors[0].message === "email must be unique") {
-    return res
-      .status(409)
-      .json({
-        message:
-          "Email address already in use. Please choose a different email",
-      });
   } else {
     return res.status(500).json({ message: "Internal Server Error" });
   }

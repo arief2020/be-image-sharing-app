@@ -2,20 +2,17 @@ const express = require("express");
 
 const router = express.Router();
 
-const path = require("path");
-const swaggerRouter = require('../swagger')
-const movieRouter = require('./movieRouter')
-const userRouter = require('./userRouter')
-const authRouter = require('./authRouter');
-const profileRouter = require('./profileRouter');
-const { authentication } = require("../middleware/authHandler");
+const userRouter = require('./user.router')
+const authRouter = require('./auth.router');
+const imageRouter = require('./image.router');
+const tagRouter = require('./tag.router');
+const likeRouter = require('./like.router');
+const commentRouter = require('./comment.router');
+const { authentication } = require("../middleware/auth.middleware");
 
-router.use("/api/images", express.static(path.join(__dirname, "../uploads")))
-router.use('/', swaggerRouter)
-router.use('/api/auth', authRouter)
+
+router.use('/auth', authRouter)
 router.use(authentication)
-router.use('/api/profile', profileRouter )
-router.use('/api/movies', movieRouter)
-router.use('/api/users', userRouter)
+router.use('/users', userRouter)
 
 module.exports = router;
